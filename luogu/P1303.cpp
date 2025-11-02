@@ -36,9 +36,22 @@ int main() {
     }
   }
 
+  bool leading = true;
+  int p = 0;
   for (int i = res.size() - 1; i >= 0; i--) {
-    std::cout << res[i];
+    if (res[i] != 0) {
+      leading = false;
+      std::cout << res[i];
+      p++;
+    } else {
+      if (!leading) {
+        std::cout << res[i];
+        p++;
+      }
+    }
   }
+  if (p == 0)
+    std::cout << '0';
   std::cout << std::endl;
 
   return 0;

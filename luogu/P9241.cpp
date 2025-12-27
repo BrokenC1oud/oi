@@ -1,41 +1,56 @@
-#include <algorithm>
-#include <cstdio>
-#include <cstring>
-int t, n, bk[15];
-struct plane {
+#include <functional>
+#include <iostream>
+#include <vector>
+
+struct Plane {
   int t, d, l;
-} planes[15];
+};
 
-bool dfs(int dep, int time) {
-  if (dep > n) {
-    return 1;
+void solve() {
+  int n;
+  std::cin >> n;
+  std::vector<Plane> planes(n);
+  for (Plane &plane : planes) {
+    std::cin >> plane.t >> plane.d >> plane.l;
   }
 
-  for (int i = 1; i <= n; i++) {
-    if (bk[i] || planes[i].t + planes[i].d < time)
-      continue;
-    bk[i] = 1;
-    if (dfs(dep + 1, std::max(time, planes[i].t) + planes[i].l)) {
-      bk[i] = 0;
-      return 1;
+  std::vector<bool> visited(n, false);
+  bool possible = false;
+
+  std::function<void(int, int)> dfs = [&](int last_time, int count) {
+    if (possible)
+      return;
+    if (count == n) {
+      possible = true;
+      return;
     }
-    bk[i] = 0;
-  }
-  return 0;
+
+    for (int i = 0; i < n; i++) {
+      if (!visited[i]) {
+        int start_time = std::max(last_time, planes[i].t);
+
+        if (start_time <= planes[i].t + planes[i].d) {
+          visited[i] = true;
+          dfs(start_time + planes[i].l, count + 1);
+          visited[i] = false;
+        }
+      }
+    }
+  };
+
+  dfs(0, 0);
+
+  if (possible)
+    std::cout << "YES" << std::endl;
+  else
+    std::cout << "NO" << std::endl;
 }
 
 int main() {
-  scanf("%d", &t);
+  int t;
+  std::cin >> t;
   while (t--) {
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-      scanf("%d %d %d", &planes[i].t, &planes[i].d, &planes[i].l);
-    }
-    memset(bk, 0, sizeof bk);
-    if (dfs(1, 0)) {
-      printf("YES\n");
-    } else {
-      printf("NO\n");
-    }
+    solve();
   }
+  return 0;
 }

@@ -28,7 +28,7 @@
           shellHook = ''
             echo "Compiler: $(g++ --version | head -n 1)"
 
-            alias gpp='g++ -std=c++26 -O2 -Wall -Wextra -Wshadow -DLOCAL -fsanitize=address,leak,undefined'
+            abbr gpp 'g++ -std=c++26 -O2 -Wall -Wextra -Wshadow -DLOCAL -fsanitize=address,leak,undefined'
           '';
         };
       }

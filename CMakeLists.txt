@@ -55,6 +55,23 @@ foreach (cpp_file ${PINTIA})
   add_executable(${exec_name} ${cpp_file})
 endforeach ()
 
+file(GLOB DATA_STRUCTURE "${CMAKE_CURRENT_SOURCE_DIR}/data_structure/**/*.cpp")
+
+foreach (cpp_file ${DATA_STRUCTURE})
+  get_filename_component(exec_name ${cpp_file} NAME_WE)
+  add_executable(${exec_name} ${cpp_file}
+          luogu/P8627.cpp
+          luogu/P10985.cpp
+          luogu/P12172.cpp
+          luogu/P10385.cpp
+          luogu/P12164.cpp
+          practice/fibonacci_template.cpp
+          luogu/P2040.cpp
+          luogu/B4158.cpp
+          luogu/P8598.cpp
+          luogu/P10386.cpp)
+endforeach ()
+
 # Optional: Print message showing what executables were created
 message(STATUS "Created executables for: ${LUOGU}")
 
